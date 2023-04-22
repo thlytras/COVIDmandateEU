@@ -10,7 +10,7 @@ prdatIT[,grep("^sl", names(prdatIT))] <- 0
 
 cat("Bootstrapping for Greece: ")
 elapsed.time.GR <- system.time({ 
-  bb.GR <- bootMer(mGRns, function(m) {
+  bb.GR <- bootMer(mGR, function(m) {
     cat(".")
     predict(m,prdatGR)
   }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=NULL)
@@ -18,7 +18,7 @@ elapsed.time.GR <- system.time({
 
 cat("\n\nBootstrapping for Italy: ")
 elapsed.time.IT <- system.time({ 
-  bb.IT <- bootMer(mITns, function(m) {
+  bb.IT <- bootMer(mIT, function(m) {
     cat(".")
     predict(m,prdatIT)
   }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=NULL)

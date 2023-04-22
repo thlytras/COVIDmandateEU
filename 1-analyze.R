@@ -2,11 +2,11 @@ if (!exists("dat")) source("0-prep.R")
 
 library(lme4)
 
-mGR <- glmer(firstDoses ~ label + factor(mandate) + sl2 + sl3 + (1|wk) + (1|olre), offset=log(unvacc), data=datGR, family="poisson")
-mGRns <- glmer(firstDoses ~ label + factor(mandate) + (1|wk) + (1|olre), offset=log(unvacc), data=datGR, family="poisson")
-mIT <- glmer(firstDoses ~ label + factor(mandate) + sl2 + sl3 + sl4 + (1|wk) + (1|olre), offset=log(unvacc), data=datIT, family="poisson")
-mITns <- glmer(firstDoses ~ label + factor(mandate) + (1|wk) + (1|olre), offset=log(unvacc), data=datIT, family="poisson")
-mAT <- glmer(firstDoses ~ factor(mandate) + sl1 + sl2 + sl3 + (1|olre), offset=log(unvacc), data=datAT, family="poisson")
+mGRs <- glmer(firstDoses ~ label + factor(mandate) + sl2 + sl3 + (1|wk) + (1|olre), offset=log(unvacc), data=datGR, family="poisson")
+mGR <- glmer(firstDoses ~ label + factor(mandate) + (1|wk) + (1|olre), offset=log(unvacc), data=datGR, family="poisson")
+mITs <- glmer(firstDoses ~ label + factor(mandate) + sl2 + sl3 + sl4 + (1|wk) + (1|olre), offset=log(unvacc), data=datIT, family="poisson")
+mIT <- glmer(firstDoses ~ label + factor(mandate) + (1|wk) + (1|olre), offset=log(unvacc), data=datIT, family="poisson")
+mAT <- glmer(firstDoses ~ factor(mandate) + sl1 + sl2 + sl3 + (1|olre), offset=log(unvacc), data=datAT, family="poisson", control=glmerControl(optimizer="bobyqa"))
 
 # Calculate Rate Ratios from model matrix (fixed-effects only)
 RR_from_mm <- function(m, mm) {
@@ -69,3 +69,4 @@ calcBenefit <- function(m, dat, bb) {
 
 benefitGR <- calcBenefit(mGR, datGR, bb.GR)
 benefitIT <- calcBenefit(mIT, datIT, bb.IT)
+
