@@ -49,14 +49,17 @@ durationRR <- function(m) {
   RR_from_mm(m, mm)
 }
 
+
+
+# Create (or load, if already stored) the bootstrapped prediction estimates
 if (file.exists("bootstrap.RData")) {
   load("bootstrap.RData")
 } else {
   source("bootstrap.R")
 }
 
-
-calcBenefit <- function(m, dat, bb) {
+# Function to arrange them into neat benefit estimates with 95% CIs.
+calcBenefit <- function(m, dat, bb) {  # model, dataset, bootstrap predictions
   bbCumprod <- apply(1-exp(bb$t), 1, function(x) cumprod(x))
   bbCumprod <- rbind(1, bbCumprod)
   iM <- which(dat$mandate==2)[1]

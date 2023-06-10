@@ -1,4 +1,4 @@
-if (!exists("mGR") || !exists("mIT")) source("analyze.R")
+if (!exists("mGR") || !exists("mIT")) source("1-analyze.R")
 
 prdatGR <- subset(datGR, mandate>1)
 prdatGR$mandate <- 1
@@ -13,7 +13,7 @@ elapsed.time.GR <- system.time({
   bb.GR <- bootMer(mGR, function(m) {
     cat(".")
     predict(m,prdatGR)
-  }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=NULL)
+  }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=~(1|wk))
 })
 
 cat("\n\nBootstrapping for Italy: ")
@@ -21,7 +21,7 @@ elapsed.time.IT <- system.time({
   bb.IT <- bootMer(mIT, function(m) {
     cat(".")
     predict(m,prdatIT)
-  }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=NULL)
+  }, nsim=5000, ncpus=4, parallel="multicore", seed=42, re.form=~(1|wk))
 })
 
 save(prdatGR, prdatIT, bb.GR, bb.IT, elapsed.time.GR, elapsed.time.IT, file="bootstrap.RData")
