@@ -35,7 +35,7 @@ iwk <- function(w, d=datGR) match(w, sort(unique(d$wk)))
 
 # Austria
 datAT <- rbind(
-  aggrBy(ReportingCountry=="AT", c(202135,202250), "All")
+  aggrBy(ReportingCountry=="AT" & TargetGroup=="ALL", c(202135,202250), "All")
 )
 
 # Greece
